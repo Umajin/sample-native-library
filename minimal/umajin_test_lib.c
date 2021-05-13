@@ -21,7 +21,7 @@ const char* getIdentifier()
 	return "UmajinTestLib";
 }
 
-const char* process(long long tag, const char* payload)
+const char* process(uint64_t tag, const char* payload)
 {
 	if (strcmp(payload, "action") == 0)
 	{
@@ -30,7 +30,7 @@ const char* process(long long tag, const char* payload)
 	return "UmajinTestLib process says: maybe";
 }
 
-const char* poll(long long tag, long long timestamp)
+const char* poll(uint64_t tag, long long timestamp)
 {
 	if (replyToPoll)
 	{
