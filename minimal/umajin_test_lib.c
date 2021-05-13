@@ -30,7 +30,7 @@ const char* process(uint64_t tag, const char* payload)
 	return "UmajinTestLib process says: maybe";
 }
 
-const char* poll(uint64_t tag, long long timestamp)
+const char* poll(uint64_t tag, uint64_t timestamp)
 {
 	if (replyToPoll)
 	{
