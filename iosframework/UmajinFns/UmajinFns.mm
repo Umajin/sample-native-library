@@ -1,5 +1,5 @@
 //
-//  UmajinFns.m
+//  UmajinFns.mm
 //  UmajinFns
 //
 //  Created by Carl Knight on 2/06/21.
@@ -48,7 +48,7 @@ int replyToPoll = 0;
 // Demonstrate doing some ObjC in C/C++ functions.
 const char* umajin_getIdentifier(void)
 {
-   return static_cast< const char* >([UmajinFns getVersionString]);
+   return [UmajinFns getVersionString];
 }
 
 const char* umajin_process(long long tag, const char* payload)
