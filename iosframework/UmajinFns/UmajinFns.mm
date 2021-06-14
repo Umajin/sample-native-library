@@ -46,12 +46,12 @@ namespace
 int replyToPoll = 0;
 
 // Demonstrate doing some ObjC in C/C++ functions.
-const char* umajin_getIdentifier(void)
+const char* umajinGetIdentifier(void)
 {
    return [UmajinFns getVersionString];
 }
 
-const char* umajin_process(long long tag, const char* payload)
+const char* umajinProcess(long long tag, const char* payload)
 {
    if (strcmp(payload, "action") == 0)
    {
@@ -59,12 +59,12 @@ const char* umajin_process(long long tag, const char* payload)
    }
    else if(strcmp(payload, "id") == 0)
    {
-      return umajin_getIdentifier();
+      return umajinGetIdentifier();
    }
    return "UmajinTestLib process says: maybe";
 }
 
-const char* umajin_poll(long long tag, long long timestamp)
+const char* umajinPoll(long long tag, long long timestamp)
 {
    if (replyToPoll)
    {

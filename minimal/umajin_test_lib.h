@@ -26,13 +26,13 @@
 
 // The returned identifier has to be GLOBALLY unique between all external libraries and also it
 // has to be an immutable value - i.e. the value cannot change between calls.
-EXPORT const char* umajin_getIdentifier();
+EXPORT const char* umajinGetIdentifier();
 
-EXPORT const char* umajin_process(
+EXPORT const char* umajinProcess(
     uint64_t tag /* Unique identifier for the customer. It can be used as a key to store state. */,
     const char* payload);
 
-EXPORT const char* umajin_poll(uint64_t tag /* The same as in process(). */,
+EXPORT const char* umajinPoll(uint64_t tag /* The same as in process(). */,
     uint64_t timestamp /* Microseconds since app launch. */);
 
 #endif // UMAJIN_TEST_LIB_H

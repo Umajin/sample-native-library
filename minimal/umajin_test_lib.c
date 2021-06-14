@@ -16,12 +16,12 @@
 
 int replyToPoll = 0;
 
-const char* umajin_getIdentifier()
+const char* umajinGetIdentifier()
 {
 	return "UmajinTestLib";
 }
 
-const char* umajin_process(uint64_t tag, const char* payload)
+const char* umajinProcess(uint64_t tag, const char* payload)
 {
 	if (strcmp(payload, "action") == 0)
 	{
@@ -30,7 +30,7 @@ const char* umajin_process(uint64_t tag, const char* payload)
 	return "UmajinTestLib process says: maybe";
 }
 
-const char* umajin_poll(uint64_t tag, uint64_t timestamp)
+const char* umajinPoll(uint64_t tag, uint64_t timestamp)
 {
 	if (replyToPoll)
 	{

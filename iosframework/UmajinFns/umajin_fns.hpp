@@ -13,13 +13,13 @@
 
 // The returned identifier has to be GLOBALLY unique between all external libraries and also it
 // has to be an immutable value - i.e. the value cannot change between calls.
-FOUNDATION_EXPORT const char* umajin_getIdentifier(void);
+FOUNDATION_EXPORT const char* umajinGetIdentifier(void);
 
-FOUNDATION_EXPORT const char* umajin_process(
+FOUNDATION_EXPORT const char* umajinProcess(
     long long tag /* Unique identifier for the customer. It can be used as a key to store state. */,
     const char* payload);
 
-FOUNDATION_EXPORT const char* umajin_poll(long long tag /* The same as in process(). */,
+FOUNDATION_EXPORT const char* umajinPoll(long long tag /* The same as in process(). */,
     long long timestamp /* Microseconds since app launch. */);
 
 #endif /* umajin_fns_hpp */
