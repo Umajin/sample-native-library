@@ -12,7 +12,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		85256220263A5F27007F5694 /* libUmajinTestLib.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libUmajinTestLib.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
+		85256220263A5F27007F5694 /* libUmajinTestLib2.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libUmajinTestLib2.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		85256228263A5FE9007F5694 /* umajin_test_lib.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = umajin_test_lib.h; sourceTree = "<group>"; };
 		85256229263A5FE9007F5694 /* umajin_test_lib.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = umajin_test_lib.c; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -40,7 +40,7 @@
 		85256221263A5F27007F5694 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				85256220263A5F27007F5694 /* libUmajinTestLib.dylib */,
+				85256220263A5F27007F5694 /* libUmajinTestLib2.dylib */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -59,9 +59,9 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		8525621F263A5F27007F5694 /* UmajinTestLib */ = {
+		8525621F263A5F27007F5694 /* UmajinTestLib2 */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 85256224263A5F27007F5694 /* Build configuration list for PBXNativeTarget "UmajinTestLib" */;
+			buildConfigurationList = 85256224263A5F27007F5694 /* Build configuration list for PBXNativeTarget "UmajinTestLib2" */;
 			buildPhases = (
 				8525621C263A5F27007F5694 /* Headers */,
 				8525621D263A5F27007F5694 /* Sources */,
@@ -71,9 +71,9 @@
 			);
 			dependencies = (
 			);
-			name = UmajinTestLib;
+			name = UmajinTestLib2;
 			productName = UmajinTestLib;
-			productReference = 85256220263A5F27007F5694 /* libUmajinTestLib.dylib */;
+			productReference = 85256220263A5F27007F5694 /* libUmajinTestLib2.dylib */;
 			productType = "com.apple.product-type.library.dynamic";
 		};
 /* End PBXNativeTarget section */
@@ -89,7 +89,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 8525621B263A5F27007F5694 /* Build configuration list for PBXProject "UmajinTestLib" */;
+			buildConfigurationList = 8525621B263A5F27007F5694 /* Build configuration list for PBXProject "UmajinTestLib2" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -102,7 +102,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				8525621F263A5F27007F5694 /* UmajinTestLib */,
+				8525621F263A5F27007F5694 /* UmajinTestLib2 */,
 			);
 		};
 /* End PBXProject section */
@@ -259,7 +259,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		8525621B263A5F27007F5694 /* Build configuration list for PBXProject "UmajinTestLib" */ = {
+		8525621B263A5F27007F5694 /* Build configuration list for PBXProject "UmajinTestLib2" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				85256222263A5F27007F5694 /* Debug */,
@@ -268,7 +268,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		85256224263A5F27007F5694 /* Build configuration list for PBXNativeTarget "UmajinTestLib" */ = {
+		85256224263A5F27007F5694 /* Build configuration list for PBXNativeTarget "UmajinTestLib2" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				85256225263A5F27007F5694 /* Debug */,
