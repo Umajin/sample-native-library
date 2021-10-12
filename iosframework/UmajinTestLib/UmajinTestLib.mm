@@ -1,13 +1,12 @@
 //
-//  UmajinFns.mm
-//  UmajinFns
+//  UmajinTestLib
 //
 //  Created by Carl Knight on 2/06/21.
 //
 
 #import <Foundation/Foundation.h>
-#import "UmajinFns.h"
-#include "umajin_fns.hpp"
+#import "UmajinTestLib.h"
+#include "UmajinTestLib.hpp"
 #include <mutex>
 #include <string>
 
@@ -20,25 +19,25 @@ namespace
 {
    std::once_flag versNumOnce, versStrOnce;
 
-   double UmajinFnsVersionNumber;
-   //! Project version string for UmajinFns.
-   std::string UmajinFnsVersionString;
+   double UmajinTestLibVersionNumber;
+   //! Project version string for UmajinTestLib
+   std::string UmajinTestLibVersionString;
 }
 
-@implementation UmajinFns
+@implementation UmajinTestLib
 
 // Demonstrate doing some C++ in ObjC functions...
 + (double) getVersionNumber
 {
-   std::call_once(versNumOnce, []{ UmajinFnsVersionNumber = 1.0; });
-   return UmajinFnsVersionNumber;
+   std::call_once(versNumOnce, []{ UmajinTestLibVersionNumber = 1.0; });
+   return UmajinTestLibVersionNumber;
 }
 
 + (const char*) getVersionString
 {
    std::call_once(versStrOnce, [] {
-      UmajinFnsVersionString = [[NSString stringWithFormat:@"UmajinFns version %lf", [UmajinFns getVersionNumber]] cStringUsingEncoding:NSUTF8StringEncoding];});
-   return UmajinFnsVersionString.c_str();
+      UmajinTestLibVersionString = [[NSString stringWithFormat:@"UmajinTestLib version %lf", [UmajinTestLib getVersionNumber]] cStringUsingEncoding:NSUTF8StringEncoding];});
+   return UmajinTestLibVersionString.c_str();
 }
 
 @end
@@ -48,7 +47,7 @@ int replyToPoll = 0;
 // Demonstrate doing some ObjC in C/C++ functions.
 const char* umajinGetIdentifier(void)
 {
-   return [UmajinFns getVersionString];
+   return [UmajinTestLib getVersionString];
 }
 
 const char* umajinProcess(long long tag, const char* payload)

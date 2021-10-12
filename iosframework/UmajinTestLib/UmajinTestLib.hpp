@@ -1,12 +1,11 @@
 //
-//  umajin_fns.hpp
-//  UmajinFns
+//  UmajinTestLib
 //
 //  Created by Carl Knight on 3/06/21.
 //
 
-#ifndef umajin_fns_hpp
-#define umajin_fns_hpp
+#ifndef UmajinTestLib_hpp
+#define UmajinTestLib_hpp
 
 // All functions are guaranteed to be called within the same thread, so no multithread safety is
 // required in the library.
@@ -22,4 +21,4 @@ FOUNDATION_EXPORT const char* umajinProcess(
 FOUNDATION_EXPORT const char* umajinPoll(long long tag /* The same as in process(). */,
     long long timestamp /* Microseconds since app launch. */);
 
-#endif /* umajin_fns_hpp */
+#endif /* UmajinTestLib_hpp */
