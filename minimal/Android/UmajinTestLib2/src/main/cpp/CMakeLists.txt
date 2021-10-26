@@ -7,7 +7,7 @@ cmake_minimum_required(VERSION 3.10.2)
 
 # Declares and names the project.
 
-project("umajintestlib")
+project("umajintest2")
 
 # Creates and names a library, sets it as either STATIC
 # or SHARED, and provides the relative paths to its source code.
@@ -15,8 +15,8 @@ project("umajintestlib")
 # Gradle automatically packages shared libraries with your APK.
 
 add_library(
-        # Sets the name of the library. Note: The .so generated will be libumajintestlib.so
-        umajintestlib
+        # Sets the name of the library. Note: The .so generated will be libumajintest2.so
+        umajintest2
 
         # Sets the library as a shared library.
         SHARED
@@ -30,4 +30,4 @@ add_library(
 # build script, prebuilt third-party libraries, or system libraries.
 
 target_link_libraries( # Specifies the target library.
-        umajintestlib)
+        umajintest2)

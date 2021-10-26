@@ -24,7 +24,8 @@ android {
 
             prefab {
                 // lib name, then lib settings.
-                umajintestlib {
+                // This builds libumajintest2.so
+                umajintest2 {
                     // headers "paths to header locations..."
                 }
                 // other libs here...
