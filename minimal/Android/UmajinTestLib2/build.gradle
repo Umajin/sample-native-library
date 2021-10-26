@@ -1,0 +1,70 @@
+plugins {
+    // id is com.android.library and not com.android.application
+    id 'com.android.library'
+    id 'kotlin-android'
+}
+
+android {
+    compileSdk 30
+
+    defaultConfig {
+        // The minSdk MUST be <= the minSdk in the umajin engine.
+        minSdk 22
+        targetSdk 30
+        versionCode 1
+        versionName "1.0"
+        ndk {
+            // Umajin expects only 32 and 64 bit arm.
+            abiFilters 'armeabi-v7a','arm64-v8a'
+        }
+        externalNativeBuild {
+            buildFeatures {
+                prefabPublishing true
+            }
+
+            prefab {
+                // lib name, then lib settings.
+                umajintestlib {
+                    // headers "paths to header locations..."
+                }
+                // other libs here...
+                // mylib {... and so on.
+            }
+
+            cmake {
+                // Example arguments, cFlags and cppFlags.
+                //arguments '-DANDROID_STL=c++_static', '-DANDROID_STL_PREFIX=llvm-libc++'
+                //cFlags '-DTARGET_ANDROID', '-DTARGET_AOT', '-DBOOST_MULTI_INDEX_DISABLE_SERIALIZATION', '-DUMAJIN_ON_ANDROID', /'-DAPP_NAME=\"${APP_NAME}\"'/, /'-DAPP_NAME_CLEAN=\"${APP_NAME_CLEAN}\"'/ ${FOUND_FLAGS}
+                //cppFlags '-DTARGET_ANDROID', '-DTARGET_AOT', '-DBOOST_MULTI_INDEX_DISABLE_SERIALIZATION', '-DUMAJIN_ON_ANDROID', /'-DAPP_NAME=\"${APP_NAME}\"'/, /'-DAPP_NAME_CLEAN=\"${APP_NAME_CLEAN}\"'/ ${FOUND_FLAGS}
+                // Umajin expects only 32 and 64 bit arm.
+                abiFilters 'armeabi-v7a','arm64-v8a'
+            }
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+    externalNativeBuild {
+        cmake {
+            path file('src/main/cpp/CMakeLists.txt')
+            version '3.10.2'
+        }
+    }
+    buildFeatures {
+        viewBinding true
+    }
+}
+
+dependencies {
+}
