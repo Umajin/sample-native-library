@@ -8,7 +8,7 @@ Umajin has an interface that allows integrating native code into your project. T
 - **Windows** 64 bit DLL.
 - **Mac** Dynamic Library (dylib) targeting arch x86_64.
 - **iOS** A 64 bit framework containing a dylib (iOS) targeting arch arm64.
-- **Android** An Android Library (AAR) containing arm 32 bit and arm 64 bit Shared Objects (.so) targeting armv7a and armv8a respectively.  
+- **Android (future release)** An Android Library (AAR) containing arm 32 bit and arm 64 bit Shared Objects (.so) targeting armv7a and armv8a respectively.  
 
 These all have a C-style API.
 
@@ -31,13 +31,40 @@ umajinProcess is the interface for editor/JS to call into the library. This is t
 
 umajinProcessV2 is the interface for editor/JS to call into the library.
 
-umajinProcessBinary is the interface for editor/JS to call into the library providing a size and a byte buffer of that size. THe buffer is only valid during the call so the library must copy data as necessary in its umajinProcessBinary implementation.
+umajinProcessBinary (future release) is the interface for editor/JS to call into the library providing a size and a byte buffer of that size. THe buffer is only valid during the call so the library must copy data as necessary in its umajinProcessBinary implementation.
 
 umajinPoll is called every frame for the library to send data to the project JS, if it has any; ie asynchronous events or responses.
 
-umajinPollBinary is called every frame for the library to send data to the project JS, if it has any; ie asynchronous events or responses and the library can allocate a buffer via bufferOut and set its size via sizeOut in the callers stack. **NOTE** the library must provide umajinDestroy so that the caller can hand the allocated buffer back to the library for safe release/freeing when the caller is done.
+umajinPollBinary (future release) is called every frame for the library to send data to the project JS, if it has any; ie asynchronous events or responses and the library can allocate a buffer via bufferOut and set its size via sizeOut in the callers stack. **NOTE** the library must provide umajinDestroy so that the caller can hand the allocated buffer back to the library for safe release/freeing when the caller is done.
 
-umajinDestory is called when the umajin engine has finished with a buffer allocated the library and returned by umajinPollBinary. The library should free whatever resources allocated at the address passed to umajinDestroy.
+umajinDestory (future release) is called when the umajin engine has finished with a buffer allocated the library and returned by umajinPollBinary. The library should free whatever resources allocated at the address passed to umajinDestroy.
+
+### Per platform considerations.
+
+- All integer types passed to the umajin... functions by long long should be 64 bit integers for the compiler and language (C/C++/ObjC/Swift).
+- You need to provide for all your own depenencies by dynamic linking.
+- Minimum versions of the target OS must not exceed those provided by the Umajin Editor. What those minima are will depend upon the version of the Umajin Editor.
+
+#### Windows.
+
+- Minimum: Windows 10.
+- Architectures: x64.
+
+#### MacOS.
+
+- Minimum: MacOS 10.13. 
+- Architectures: x86_64. arm64 tbd.
+
+#### iOS.
+
+- Minimum: iOS 13.
+- Architectures: arm64.
+
+#### Android (future release).
+
+- Minimum: Android API level 22.
+- Target: Android API level 30.
+- Architectures: armv7a, armv8a.
 
 ## Installing the native library
 Once you have created your DLL/Dylib/framework/AAR, place them in the Umajin Project folder as follows:
@@ -45,7 +72,7 @@ Once you have created your DLL/Dylib/framework/AAR, place them in the Umajin Pro
 - Windows: /manifest/win/bin
 - Mac: /manifest/osx/bin
 - iOS: /manifest/ios/frameworks
-- Android: /manifest/android/aar
+- Android (future release): /manifest/android/aar
 
 You may need to create these folders if they do not already exist.
 
@@ -53,7 +80,7 @@ Note that while you may be able to use other folders, these are the standard fol
 
 On Mac and iOS, they will be placed in the Contents/Frameworks folder in the .app folder.
 
-On Android the Android Library containing the Shared Objects will be added to your Android project as a dependency.
+On Android (future release) the Android Library containing the Shared Objects will be added to your Android project as a dependency.
 
 ## Loading the library
 From Javascript, call registerExternalFunction() with the library name. Umajin will work out what to load.
@@ -71,8 +98,8 @@ The expected filename is:
 
 - myLibrary.dll on Windows
 - libMyLibrary.dylib on MacOS.  Note the expected “lib” prefix for MacOS.
-- myLibrary.framework/name on iOS. Note, no "lib" prefix and no extension.
-- libMyLibrary.so on Android.
+- myLibrary.framework/dylib on iOS. Note, no "lib" prefix and no extension.
+- libMyLibrary.so on Android (future release). Be aware that CMake target library name does not include the "lib" prefix or ".so" extension but that the resulting binary has both.
 
 If you want to load a filename that doesn’t have the standard extension or prefix, you can do so by specifying the extension. You can also supply a path, in which case Umajin will use that directly.
 
@@ -104,8 +131,8 @@ Once successfully loaded, you can send data to the library using:
 
 ```
 var result = externalFunctionProcess(libraryId , data);
-This function can return data immediately.
 ```
+This function can return data immediately.
 
 If the library needs to send data back to the JS at another time (e.g. an asynchronous response to an earlier request), then it can return data when the poll() function is called. This will result in your onLibData function being called (that was registered with registerExternalFunction).
 
