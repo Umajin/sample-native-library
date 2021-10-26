@@ -39,7 +39,7 @@ umajinPollBinary (future release) is called every frame for the library to send 
 
 umajinDestory (future release) is called when the umajin engine has finished with a buffer allocated the library and returned by umajinPollBinary. The library should free whatever resources allocated at the address passed to umajinDestroy.
 
-### Per platform considerations.
+### Per platform considerations Umajin Editor 4.0.4 through 4.1.
 
 - All integer types passed to the umajin... functions by long long should be 64 bit integers for the compiler and language (C/C++/ObjC/Swift).
 - You need to provide for all your own depenencies by dynamic linking.
