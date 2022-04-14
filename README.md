@@ -15,7 +15,7 @@ These all have a C-style API.
 ## Writing the native library
 Your native library must implement several functions and export them to the DLL, Dylib or Shared Object.
 
-```
+```c
 // Identifier function
 const char* umajinGetIdentifier(void);
 
@@ -46,7 +46,7 @@ const char* umajinDestroy(long long size, unsigned char* buffer);
 
 **umajinPollBinary** (future release) is called every frame for the library to return string and binary data back to the project JS. The library can allocate a buffer via bufferOut and set its size via sizeOut in the callers stack. **NOTE** the library must provide `umajinDestroy` so that the caller can hand the allocated buffer back to the library for safe release/freeing when the caller is done.
 
-**umajinDestory** (future release) is called when Umajin has finished with a buffer allocated by the library and returned by umajinPollBinary. The library should free whatever resources were allocated at the address passed to `umajinDestroy`.
+**umajinDestroy** (future release) is called when Umajin has finished with a buffer allocated by the library and returned by `umajinPollBinary`. The library should free whatever resources were allocated at the address passed to `umajinDestroy`.
 
 ### Per platform considerations Umajin Editor 4.0.4 through 4.1.
 
@@ -94,7 +94,9 @@ On Android (future release) the Android Library containing the Shared Objects wi
 ## Loading the library
 From Javascript, call `registerExternalFunction()` with the library name. Umajin will work out what to load.
 
-    libraryId = registerExternalFunction( 'myLibrary', 'onLibData', 'onLibError');
+```javascript
+libraryId = registerExternalFunction( 'myLibrary', 'onLibData', 'onLibError');
+```
 
 The library will be loaded from an appropriate filename and place depending on the type of application and operating system.
 
@@ -116,14 +118,14 @@ If you want to load a filename that doesn’t have the standard extension or pre
 ## Using the library ##
 Once successfully loaded, you can send data to the library using:
 
-```
+```javascript
 var result = externalFunctionProcess(libraryId , data);
 ```
 This function can return data immediately.
 
 If the library needs to send data back to the JS at another time (e.g. an asynchronous response to an earlier request), then it can return data when the poll() function is called. This will result in your onLibData function being called (that was registered with registerExternalFunction).
 
-```
+```javascript
 function onLibData(data) {
 }
 ```
