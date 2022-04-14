@@ -34,7 +34,7 @@ const char* umajinPollBinary(long long tag, long long timestamp, long long* size
 const char* umajinDestroy(long long size, unsigned char* buffer);
 ```
 
-**umajinGetIdentifier** just returns an internal name for the library.
+**umajinGetIdentifier** just returns an internal name for the library. This is checked for uniqueness within the Umajin Project.
 
 **umajinProcessV2** is the interface for editor/JS to call into the library passing string data.
 
@@ -52,28 +52,10 @@ const char* umajinDestroy(long long size, unsigned char* buffer);
 
 - All integer types passed to the `umajin...` functions by long long should be 64 bit integers for the compiler and language (C/C++/ObjC/Swift).
 - You need to provide for all your own dependencies by dynamic linking.
-- Minimum versions of the target OS must not exceed those provided by the Umajin Editor. What those minima are will depend upon the version of the Umajin Editor.
+- Minimum versions of the target OS must not exceed [those provided by the Umajin Editor](https://www.umajin.com/download/download-umajin/).
+- For Android, API levels are: minimum 22, target 30.
 
-#### Windows.
-
-- Minimum: Windows 10.
-- Architectures: x64.
-
-#### MacOS.
-
-- Minimum: MacOS 10.13. 
-- Architectures: x86_64. arm64 tbd.
-
-#### iOS.
-
-- Minimum: iOS 13.
-- Architectures: arm64.
-
-#### Android (future release).
-
-- Minimum: Android API level 22.
-- Target: Android API level 30.
-- Architectures: armv7a, armv8a.
+**Upgrade Note**: In editor 4.0.x the C function names did not have the “umajin” prefix. This was added to avoid clashes with other common functions.
 
 ## Installing the native library
 Once you have created your DLL/Dylib/framework/AAR, place them in the Umajin Project folder as follows:
@@ -87,7 +69,18 @@ You may need to create these folders if they do not already exist.
 
 Note that while you may be able to use other folders, these are the standard folders that will work correctly in all situations, including when the app is “published” as a standalone application. In such standalone apps the files will be moved into appropriate places within the package. 
 
+The **expected filename** is:
+
+- `myLibrary.dll` on Windows
+- `libMyLibrary.dylib` on MacOS.  Note the expected `lib` prefix for MacOS.
+- `myLibrary.framework/dylib` on iOS. Note, no "lib" prefix and no extension.
+- `libMyLibrary.so` on Android (future release). Be aware that CMake target library name does not include the "lib" prefix or ".so" extension but that the resulting binary has both.
+
+## Output to Published Apps ##
+
 On Mac and iOS, they will be placed in the `Contents/Frameworks` folder in the `.app` folder.
+
+On Windows they will be placed in the root of the zip package alongside the main EXE.
 
 On Android (future release) the Android Library containing the Shared Objects will be added to your Android project as a dependency.
 
@@ -100,18 +93,10 @@ libraryId = registerExternalFunction( 'myLibrary', 'onLibData', 'onLibError');
 
 The library will be loaded from an appropriate filename and place depending on the type of application and operating system.
 
-It will return the same name as you pass in, which you should save in a global variable for use later.
+- It will return the same name as you pass in, which you should save in a global variable for use later.
+- If the library could not be loaded, it will return blank; the `on_error` event will also be called.
 
-If the library could not be loaded, it will return blank; the on_error event will also be called.
-
-Note that all the 3 functions must be present with correct names for loading to succeed.
-
-The expected filename is:
-
-- `myLibrary.dll` on Windows
-- `libMyLibrary.dylib` on MacOS.  Note the expected `lib` prefix for MacOS.
-- `myLibrary.framework/dylib` on iOS. Note, no "lib" prefix and no extension.
-- `libMyLibrary.so` on Android (future release). Be aware that CMake target library name does not include the "lib" prefix or ".so" extension but that the resulting binary has both.
+Note that one of each type of function (identifier, poll, response) must be present with correct names for loading to succeed.
 
 If you want to load a filename that doesn’t have the standard extension or prefix, you can do so by specifying the extension. You can also supply a path, in which case Umajin will use that directly.
  
