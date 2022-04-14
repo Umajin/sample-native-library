@@ -3,7 +3,7 @@
 >  
 > Aaron Lawrence
 
-Umajin has an interface that allows integrating native code into your project. This is supported for desktop platforms (Windows and Mac) and mobile platforms (iOS and Android). 
+Umajin has an interface that allows integrating native code into your project. This is supported fully for desktop platforms (Windows and Mac), where you can use native libraries in Umajin Editor, Umajin Lite or a published app. We also support mobile platforms (iOS and Android), but due to Apple and Google restrictions, native libraries can only be tested and used in published app builds.
 
 - **Windows** Dynamic Link Library (DLL) targeting 64 bit x86_64.
 - **Mac** Dynamic Library (dylib) targeting architecture x86_64.
@@ -13,15 +13,24 @@ Umajin has an interface that allows integrating native code into your project. T
 These all have a C-style API.
 
 ## Writing the native library
-Your native library must implement the following C functions and export them to the DLL, Dylib or Shared Object.
+Your native library must implement several functions and export them to the DLL, Dylib or Shared Object.
 
 ```
+// Identifier function
 const char* umajinGetIdentifier(void);
+
+// Process function
 const char* umajinProcessV2(long long tag, long long timestamp, const char* payload);
+// OR
 const char* umajinProcessBinary((long long tag, long long timestamp, const char* payload, long long size, unsigned char* buffer);
-const char* umajinProcess(long long tag, const char* payload); // Old interface, kept for backwards compatibility.
+// OR (for backwards compatibility)
+const char* umajinProcess(long long tag, const char* payload);
+
+// Poll function
 const char* umajinPoll(long long tag, long long timestamp);
+// OR
 const char* umajinPollBinary(long long tag, long long timestamp, long long* sizeOut, unsigned char** bufferOut);
+// also requires
 const char* umajinDestroy(long long size, unsigned char* buffer);
 ```
 
