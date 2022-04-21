@@ -7,7 +7,11 @@
 - **iOS** A 64 bit framework containing an iOS dylib targeting architecture arm64.
 - **Android (future release)** An Android Library (AAR) containing arm 32 bit and arm 64 bit Shared Objects (.so) targeting armv7a and armv8a respectively.  
 
+## Development tools
+
 These all have a C-style API.
+
+If you want to use another language, such as .Net (Windows), Objective-C or Swift (Mac and iOS), or Java or Kotlin (Android) then that code must be wrapped in a native C API. For Android this will require [installing the NDK and CMake](https://developer.android.com/studio/projects/install-ndk) for Android Studio.
 
 ## Writing the native library
 Your native library must implement several functions and export them to the DLL, Dylib or Shared Object.
