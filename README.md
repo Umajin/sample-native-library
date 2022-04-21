@@ -1,7 +1,4 @@
-# Native Libraries
-> April 30, 2021
->  
-> Aaron Lawrence
+# Native Libraries for Umajin Editor
 
 Umajin has an interface that allows integrating native code into your project. This is supported fully for desktop platforms (Windows and Mac), where you can use native libraries in Umajin Editor, Umajin Lite or a published app. We also support mobile platforms (iOS and Android), but due to Apple and Google restrictions, native libraries can only be tested and used in published app builds.
 
