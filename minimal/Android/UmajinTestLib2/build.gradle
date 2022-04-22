@@ -23,13 +23,12 @@ android {
             }
 
             prefab {
-                // lib name, then lib settings.
-                // This builds libumajintest2.so
-                umajintest2 {
-                    // headers "paths to header locations..."
+                // lib name
+                // This builds libUmajinTestLib2.so
+                // which will be packaged into the .aar
+                UmajinTestLib2 {
+                    // headers to export; irrelevant to Umajin case, which does not use a header file
                 }
-                // other libs here...
-                // mylib {... and so on.
             }
 
             cmake {
