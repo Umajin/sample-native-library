@@ -7,14 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8518F7672834AE8C008152EA /* umajin_test_lib.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8518F7662834AE8C008152EA /* umajin_test_lib.cpp */; };
 		8525622A263A5FE9007F5694 /* umajin_test_lib.h in Headers */ = {isa = PBXBuildFile; fileRef = 85256228263A5FE9007F5694 /* umajin_test_lib.h */; };
-		8525622B263A5FE9007F5694 /* umajin_test_lib.c in Sources */ = {isa = PBXBuildFile; fileRef = 85256229263A5FE9007F5694 /* umajin_test_lib.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		8518F7662834AE8C008152EA /* umajin_test_lib.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = umajin_test_lib.cpp; sourceTree = "<group>"; };
 		85256220263A5F27007F5694 /* libUmajinTestLib2.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libUmajinTestLib2.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		85256228263A5FE9007F5694 /* umajin_test_lib.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = umajin_test_lib.h; sourceTree = "<group>"; };
-		85256229263A5FE9007F5694 /* umajin_test_lib.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = umajin_test_lib.c; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,8 +31,8 @@
 		85256217263A5F27007F5694 = {
 			isa = PBXGroup;
 			children = (
+				8518F7662834AE8C008152EA /* umajin_test_lib.cpp */,
 				85256228263A5FE9007F5694 /* umajin_test_lib.h */,
-				85256229263A5FE9007F5694 /* umajin_test_lib.c */,
 				85256221263A5F27007F5694 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -112,7 +112,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8525622B263A5FE9007F5694 /* umajin_test_lib.c in Sources */,
+				8518F7672834AE8C008152EA /* umajin_test_lib.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
