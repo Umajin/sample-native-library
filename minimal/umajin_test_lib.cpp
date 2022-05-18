@@ -16,7 +16,7 @@
 
 int replyToPoll = 0;
 
-const char* umajinGetIdentifier()
+const char* umajinGetIdentifier(void) 
 {
 	return "UmajinTestLib";
 }

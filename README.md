@@ -27,7 +27,7 @@ const char* umajinGetIdentifier(void);
 // Process function
 const char* umajinProcessV2(long long tag, long long timestamp, const char* payload);
 // OR
-const char* umajinProcessBinary((long long tag, long long timestamp, const char* payload, long long size, unsigned char* buffer);
+const char* umajinProcessBinary(long long tag, long long timestamp, const char* payload, long long size, unsigned char* buffer);
 // OR (for backwards compatibility)
 const char* umajinProcess(long long tag, const char* payload);
 
