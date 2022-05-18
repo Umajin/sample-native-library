@@ -21,12 +21,17 @@
 	#define EXPORT __attribute__((visibility("default")))
 #endif
 
+#ifdef __cplusplus
+extern "C" {  // only need to export C interface if
+              // used by C++ source code
+#endif
+
 // All functions are guaranteed to be called within the same thread, so no multithread safety is
 // required in the library.
 
 // The returned identifier has to be GLOBALLY unique between all external libraries and also it
 // has to be an immutable value - i.e. the value cannot change between calls.
-EXPORT const char* umajinGetIdentifier();
+EXPORT const char* umajinGetIdentifier(void);
 
 EXPORT const char* umajinProcess(
     uint64_t tag /* Unique identifier for the customer. It can be used as a key to store state. */,
@@ -35,4 +40,9 @@ EXPORT const char* umajinProcess(
 EXPORT const char* umajinPoll(uint64_t tag /* The same as in process(). */,
     uint64_t timestamp /* Microseconds since app launch. */);
 
+#ifdef __cplusplus
+}
+#endif
+
 #endif // UMAJIN_TEST_LIB_H
+

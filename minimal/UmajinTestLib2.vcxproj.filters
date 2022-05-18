@@ -20,7 +20,7 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="umajin_test_lib.c">
+    <ClCompile Include="umajin_test_lib.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
