@@ -17,6 +17,14 @@ For Android this will require [installing the NDK and CMake](https://developer.a
 THe library will be built as a .so and then packaged into an .aar file. The library name is defined by the targets in CMakeLists.txt
 and then referenced in the build.gradle file. The name of the .aar file does not matter, only the .so files it contains.
 
+## Opening the Sample Library
+In this sample we have included projects for the common development tools on each platform.
+
+- **Windows:** Visual Studio 2019 project. Open `minimal\UmajinTestLib.sln`
+- **MacOS:** XCode 13 project. Open `minimal/UmajinTestLib2.xcodeproj`
+- **iOS:** XCode 13 project. Open `minimal/iOS/UmajinTestLib2.xcodeproj`
+- **Android:** Android Studio 2020 project. Open folder `minimal/Android`
+
 ## Writing the native library
 Your native library must implement several functions and export them to the DLL, Dylib or Shared Object.
 
