@@ -22,7 +22,7 @@ add_library(
         SHARED
 
         # Provides a relative path to your source file(s).
-        ../../../../../umajin_test_lib.c
+        ../../../../../umajin_test_lib.cpp
         ../../../../../umajin_test_lib.h)
 
 # Specifies libraries CMake should link to your target library. You
