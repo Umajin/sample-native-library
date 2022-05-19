@@ -13,6 +13,7 @@
 #ifndef UMAJIN_TEST_LIB_H
 #define UMAJIN_TEST_LIB_H
 
+
 #include <stdint.h>
 
 #if defined(_WIN32) || defined(_WIN64) // Windows:
@@ -33,12 +34,28 @@ extern "C" {  // only need to export C interface if
 // has to be an immutable value - i.e. the value cannot change between calls.
 EXPORT const char* umajinGetIdentifier(void);
 
-EXPORT const char* umajinProcess(
-    uint64_t tag /* Unique identifier for the customer. It can be used as a key to store state. */,
-    const char* payload);
+EXPORT const char* umajinProcessV2(
+   uint64_t tag /* Unique identifier for the customer. It can be used as a key to store state. */,
+   uint64_t timestamp,
+   const char* payload);
+
+EXPORT const char* umajinProcessBinary(
+   uint64_t tag /* Unique identifier for the customer. It can be used as a key to store state. */,
+   uint64_t timestamp, 
+   const char* payload, 
+   uint64_t sizeData, 
+   const uint8_t* data);
 
 EXPORT const char* umajinPoll(uint64_t tag /* The same as in process(). */,
     uint64_t timestamp /* Microseconds since app launch. */);
+
+EXPORT const char* umajinPollBinary(uint64_t tag /* The same as in process(). */,
+   uint64_t timestamp, /* Microseconds since app launch. */
+   uint64_t* sizeOut, uint8_t** bufOut);
+
+EXPORT void umajinDestroy(
+   uint64_t size, // The size of the buffer being destroyed.
+   uint8_t* buf /* Address of the buffer the framework previously allocated for the caller in umajinPollBinary */);
 
 #ifdef __cplusplus
 }

@@ -13,32 +13,136 @@
 #include "umajin_test_lib.h"
 
 #include <string.h>
+#include <memory>
+
+const int POLL_RETURN_STRING = 1;
+const int POLL_RETURN_IMAGE = 2;
+const int POLL_RETURN_PROCESSED_IMAGE = 3;
 
 int replyToPoll = 0;
 
-const char* umajinGetIdentifier(void) 
+namespace
+{
+	// Avoid buffer destruction if we can. Keep the last buffer
+	// and don't reallocate unless we can't fit the data into
+	// lastBuffer.
+	std::unique_ptr<uint8_t[]> lastBuffer;
+	uint64_t lastBufferSize = 0;
+}
+
+const char* umajinGetIdentifier(void)
 {
 	return "UmajinTestLib";
 }
 
-const char* umajinProcess(uint64_t tag, const char* payload)
+const char* umajinProcessV2(uint64_t tag, uint64_t timestamp, const char* payload)
 {
-	if (strcmp(payload, "action") == 0)
+	if (strcmp(payload, "ask-for-string") == 0)
 	{
-		replyToPoll = 1;
+		replyToPoll = POLL_RETURN_STRING;
+		return "UmajinTestLib:umajinProcessV2 - ask for string";
 	}
-	return "UmajinTestLib process says: maybe";
+	else if (strcmp(payload, "ask-for-image") == 0)
+	{
+		replyToPoll = POLL_RETURN_IMAGE;
+		return "UmajinTestLib:umajinProcessV2 - ask for image";
+	}
+	else
+	{
+		return "UmajinTestLib:umajinProcessV2 - unknown request";
+	}
+}
+
+const char* umajinProcessBinary(uint64_t tag, uint64_t timestamp, const char* payload, uint64_t sizeData, const uint8_t* data)
+{
+	if (strcmp(payload, "send-image") == 0)
+	{
+		if (sizeData != lastBufferSize)
+		{
+			lastBufferSize = sizeData;
+			lastBuffer.reset(new uint8_t[lastBufferSize]);
+		}
+		memcpy(lastBuffer.get(), data, sizeData);
+
+		// assume: RGB, stride = width*depth, so we can just treat it all as one stream of pixels
+		for (int i = 0; i < sizeData; i += 3)
+		{
+			lastBuffer[i + 0] = lastBuffer[i + 0] ^ 0xFF;
+			lastBuffer[i + 1] = lastBuffer[i + 1] ^ 0xFF; 
+			lastBuffer[i + 2] = lastBuffer[i + 2] ^ 0xFF;
+		}
+		 
+		replyToPoll = POLL_RETURN_PROCESSED_IMAGE;
+		return "image accepted, will respond on next poll";
+	}
+	else
+	{
+		return umajinProcessV2(tag, timestamp, payload);
+	}
 }
 
 const char* umajinPoll(uint64_t tag, uint64_t timestamp)
 {
-	if (replyToPoll)
+	if (replyToPoll == POLL_RETURN_STRING)
 	{
 		replyToPoll = 0;
-		return "UmajinTestLib says hello in response";
+		return "UmajinTestLib:umajinPoll - returning string";
 	}
 	else
 	{
 		return "";
 	}
+}
+
+const char* umajinPollBinary(uint64_t tag, uint64_t timestamp, uint64_t* sizeOut, uint8_t** bufOut)
+{
+	if ( replyToPoll == POLL_RETURN_IMAGE )
+	{
+		int width = 255;
+		int height = 255;
+		int bpp = 4;
+		int size = width * height * bpp;
+
+		if (size > lastBufferSize)
+		{
+			lastBufferSize = size;
+			lastBuffer.reset(new uint8_t[lastBufferSize]);
+		}
+		*bufOut = lastBuffer.get();
+		*sizeOut = lastBufferSize;
+
+		//draw color into the argb buffer
+		for (int r = 0; r < width; r++)
+		{
+			for (int c = 0; c < height; c++) 
+			{
+				int idx = r * height * bpp + c * bpp;
+				lastBuffer[idx] = 255; //alpha
+				lastBuffer[idx + 1] = r;
+				lastBuffer[idx + 2] = c;
+				lastBuffer[idx + 3] = r + c;
+			}
+		}
+		replyToPoll = 0;
+		return "{\"type\":\"image\", \"height\":255,  \"stride\" : 1020, \"format\" : \"argb\", \"width\" : 255, \"timestamp\" : 11294}";
+	}
+	else if (replyToPoll == POLL_RETURN_PROCESSED_IMAGE)
+	{
+		replyToPoll = 0;
+		// return "Would have returned processed image";
+		*bufOut = lastBuffer.get();
+		*sizeOut = lastBufferSize;
+		return "{\"type\":\"image\", \"height\":255,  \"stride\" : 1020, \"format\" : \"argb\", \"width\" : 255, \"timestamp\" : 11294}";
+	}
+	else
+	{
+		return "";
+	}
+}
+
+void umajinDestroy(	uint64_t size, // The size of the buffer being destroyed.
+							uint8_t* buf /* Address of the buffer the framework previously allocated for the caller in umajinPollBinary */) {
+		// Not used. We keep the last buffer allocated and reuse it to avoid
+		// constant allocations.
+	return;
 }
