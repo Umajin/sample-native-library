@@ -16,8 +16,7 @@
 #include <memory>
 
 const int POLL_RETURN_STRING = 1;
-const int POLL_RETURN_IMAGE = 2;
-const int POLL_RETURN_PROCESSED_IMAGE = 3;
+const int POLL_RETURN_PROCESSED_IMAGE = 2;
 
 int replyToPoll = 0;
 
@@ -41,11 +40,6 @@ const char* umajinProcessV2(uint64_t tag, uint64_t timestamp, const char* payloa
 	{
 		replyToPoll = POLL_RETURN_STRING;
 		return "UmajinTestLib:umajinProcessV2 - ask for string";
-	}
-	else if (strcmp(payload, "ask-for-image") == 0)
-	{
-		replyToPoll = POLL_RETURN_IMAGE;
-		return "UmajinTestLib:umajinProcessV2 - ask for image";
 	}
 	else
 	{
@@ -96,43 +90,13 @@ const char* umajinPoll(uint64_t tag, uint64_t timestamp)
 
 const char* umajinPollBinary(uint64_t tag, uint64_t timestamp, uint64_t* sizeOut, uint8_t** bufOut)
 {
-	if ( replyToPoll == POLL_RETURN_IMAGE )
-	{
-		int width = 255;
-		int height = 255;
-		int bpp = 4;
-		int size = width * height * bpp;
-
-		if (size > lastBufferSize)
-		{
-			lastBufferSize = size;
-			lastBuffer.reset(new uint8_t[lastBufferSize]);
-		}
-		*bufOut = lastBuffer.get();
-		*sizeOut = lastBufferSize;
-
-		//draw color into the argb buffer
-		for (int r = 0; r < width; r++)
-		{
-			for (int c = 0; c < height; c++) 
-			{
-				int idx = r * height * bpp + c * bpp;
-				lastBuffer[idx] = 255; //alpha
-				lastBuffer[idx + 1] = r;
-				lastBuffer[idx + 2] = c;
-				lastBuffer[idx + 3] = r + c;
-			}
-		}
-		replyToPoll = 0;
-		return "{\"type\":\"image\", \"height\":255,  \"stride\" : 1020, \"format\" : \"argb\", \"width\" : 255, \"timestamp\" : 11294}";
-	}
-	else if (replyToPoll == POLL_RETURN_PROCESSED_IMAGE)
+	if (replyToPoll == POLL_RETURN_PROCESSED_IMAGE)
 	{
 		replyToPoll = 0;
 		// return "Would have returned processed image";
 		*bufOut = lastBuffer.get();
 		*sizeOut = lastBufferSize;
-		return "{\"type\":\"image\", \"height\":255,  \"stride\" : 1020, \"format\" : \"argb\", \"width\" : 255, \"timestamp\" : 11294}";
+		return "UmajinTestLib:umajinPollBinary - returning processed image";;
 	}
 	else
 	{
