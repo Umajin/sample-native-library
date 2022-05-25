@@ -25,6 +25,12 @@ In this sample we have included projects for the common development tools on eac
 - **iOS:** XCode 13 project. Open `minimal/iOS/UmajinTestLib2.xcodeproj`
 - **Android:** Android Studio 2020 project. Open folder `minimal/Android`
 
+## Umajin Sample Project
+A sample project demonstrating this native library working is available in Umajin Editor 4.3.
+Select File > New > Examples folder > Native library demo.
+This shows sending and receiving binary data, using the example of inverting the colors in an image
+(display on the new Canvas compponent).
+
 ## Writing the native library
 Your native library must implement several functions and export them to the DLL, Dylib or Shared Object.
 
